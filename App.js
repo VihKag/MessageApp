@@ -1,3 +1,4 @@
+//App.js
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,15 +9,13 @@ import { AppProvider,useAppContext } from "./AppContext";
 import { useChatClient } from "./useChatClient";
 import ChannelListScreen from "./screens/channels/ChannelListScreen";
 import ChannelScreen from "./screens/channels/ChannelScreen";
+import ThreadScreen from "./screens/threads/ThreadScreen";
 import { 
   Chat, 
-  ChannelList, 
   OverlayProvider,
-  Channel,
-  MessageList,
-  MessageInput, } from "stream-chat-expo"; 
+} from "stream-chat-expo"; 
   import { StreamChat } from "stream-chat";
-  import { chatApiKey, chatUserId } from './chatConfig';
+  import { chatApiKey} from './chatConfig';
 const Stack = createStackNavigator();
 
 const NavigationStack = () => {
@@ -29,8 +28,9 @@ const NavigationStack = () => {
     <OverlayProvider>
       <Chat client={chatClient}>
         <Stack.Navigator>
-          <Stack.Screen name="ChannelList" component={ChannelListScreen} />
-          <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
+          <Stack.Screen name="ChannelList" component={ChannelListScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="ChannelScreen" component={ChannelScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="ThreadScreen" component={ThreadScreen} options={{ headerShown: false }}/>
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>

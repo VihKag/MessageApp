@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { StreamChat } from "stream-chat";
 import { chatApiKey} from "./chatConfig";
-// import { ChannelList } from 'stream-chat-expo';
-// import ChannelListScreen from './screens/channels/ChannelListScreen';
+
 export const AppContext = React.createContext({
   chatClient: null,
   loginUser: () => {},
