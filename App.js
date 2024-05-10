@@ -1,69 +1,64 @@
+//App.js
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text } from "react-native";
+import { Text, ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { AppProvider,useAppContext } from "./AppContext";
-import { useChatClient } from "./useChatClient";
-import { 
-  Chat, 
-  ChannelList, 
-  OverlayProvider,
-  Channel,
-  MessageList,
-  MessageInput, } from "stream-chat-expo"; // Or stream-chat-expo
+import { AppProvider, useAppContext } from "./AppContext";
+import { useChatClient } from "./api/useChatClient";
+import ChannelListScreen from "./screens/channels/ChannelListScreen";
+import ChannelScreen from "./screens/channels/ChannelScreen";
+import ThreadScreen from "./screens/threads/ThreadScreen";
+import FriendListScreen from "./screens/FriendListScreen";
+import FriendRequestListScreen from "./screens/FriendRequestListScreen";
+import { Chat, OverlayProvider } from "stream-chat-expo";
 import { StreamChat } from "stream-chat";
-import { chatApiKey, chatUserId } from './chatConfig';
+import { chatApiKey } from "./chatConfig";
 
-const ChannelScreen = props => {
-  const { channel } = useAppContext();
-  return (
-    <Channel channel={channel}>
-      <MessageList />
-      <MessageInput />
-    </Channel>
-  );
-};
-const filters = {
-  members: {
-    '$in': [chatUserId]
-  },
-};
-
-const sort = {
-  last_message_at: -1,
-};
 const Stack = createStackNavigator();
 
-const ChannelListScreen = props => {
-  const { setChannel } = useAppContext();
-  return (
-    <ChannelList
-      onSelect={(channel) => {
-        const { navigation } = props;
-        setChannel(channel);
-        navigation.navigate('ChannelScreen');
-      }}
-    filters={filters}
-    sort={sort}
-    />
-  );
-}
-
-const chatClient = StreamChat.getInstance(chatApiKey);
 const NavigationStack = () => {
   const { clientIsReady } = useChatClient();
-
+  const chatClient = StreamChat.getInstance(chatApiKey);
   if (!clientIsReady) {
-    return <Text>Loading chat ...</Text>;
+    return (
+        <ActivityIndicator
+          style={{ alignSelf: "auto" }}
+          size="large"
+          color="#0000ff"
+        />
+    );
   }
   return (
     <OverlayProvider>
       <Chat client={chatClient}>
         <Stack.Navigator>
-          <Stack.Screen name="ChannelList" component={ChannelListScreen} />
-          <Stack.Screen name="ChannelScreen" component={ChannelScreen} />
+          <Stack.Screen
+            name="ChannelList"
+            component={ChannelListScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ChannelScreen"
+            component={ChannelScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ThreadScreen"
+            component={ThreadScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="FriendListScreen"
+            component={FriendListScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="FriendRequestListScreen"
+            component={FriendRequestListScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </Chat>
     </OverlayProvider>
