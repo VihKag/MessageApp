@@ -5,14 +5,18 @@ const FriendRequestItem = ({ requester, onAccept, onDecline }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: requester.data.image }} style={styles.avatar} /> 
+      {requester.data.image ? (
+        <Image source={{ uri: requester.data.image }} style={styles.avatar} /> 
+      ):(
+        <Image source={require("../assets/avatar.png")} style={styles.avatar} /> 
+      )}
       <Text style={styles.name}>{requester.data.name}</Text>
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.acceptButton} onPress={onAccept}>
-          <Text style={styles.buttonText}>Chấp nhận</Text>
+          <Text style={styles.buttonAcceptText}>Chấp nhận</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.declineButton} onPress={onDecline}>
-          <Text style={styles.buttonText}>Từ chối</Text>
+          <Text style={styles.buttonRejectText}>Từ chối</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -26,6 +30,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    margin:4,
   },
   avatar: {
     width: 50,
@@ -41,20 +46,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   acceptButton: {
+    width: 80,
     marginLeft: 10,
     padding: 5,
-    backgroundColor: '#4CD964',
+    backgroundColor: '#c1dcff',
     borderRadius: 5,
   },
   declineButton: {
     marginLeft: 10,
+    width: 80,
     padding: 5,
-    backgroundColor: '#FF3B30',
+    backgroundColor: '#ffe6e6',
     borderRadius: 5,
   },
-  buttonText: {
-    color: '#fff',
+  buttonAcceptText: {
+    color: 'blue',
+    textAlign: 'center',
+    fontWeight: '700',
   },
+  buttonRejectText:{
+    color:'red',
+    textAlign: 'center',
+    fontWeight: '700',
+  }
 });
 
 export default FriendRequestItem;

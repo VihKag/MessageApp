@@ -4,7 +4,7 @@ import { useAppContext } from "../AppContext";
 import FriendRequestItem from "../components/FriendRequestItem"; // Component to display each friend request
 
 const FriendRequestListScreen = () => {
-  const { chatClient, user } = useAppContext();
+  const { chatClient, user, setUser } = useAppContext();
   const [friendRequests, setFriendRequests] = useState([]);
 
   useEffect(() => {
@@ -17,39 +17,90 @@ const FriendRequestListScreen = () => {
     };
 
     fetchFriendRequests();
-  }, []);
+  }, [user]);
 
   const handleAccept = async (requester) => {
     // Handle acceptance of the friend request
-    const listRequest = user.friend_requests.filter(request => !(request.data.id === requester.data.id && request.data.recipient === requester.data.recipient));
+    const listRequest = user.friend_requests.filter(
+      (request) =>
+        !(
+          request.data.id === requester.data.id &&
+          request.data.recipient === requester.data.recipient
+        )
+    );
     console.log(user.id);
-
+    //update list requests
+    const updatedFriendRequests = friendRequests.filter(
+      (request) =>
+        !(
+          request.data.id === requester.data.id &&
+          request.data.recipient === requester.data.recipient
+        )
+    );
     const friendlist = user.friends ? user.friends : [];
     const update = await chatClient.partialUpdateUsers([
       {
         id: user.id,
         set: {
-          friends: [...friendlist, {id: requester.data.id, name: requester.data.name, email: requester.data.email}],
+          friends: [
+            ...friendlist,
+            {
+              id: requester.data.id,
+              name: requester.data.name,
+              email: requester.data.email,
+            },
+          ],
           friend_requests: listRequest,
         },
       },
       {
         id: requester.data.id,
         set: {
-          friends: [...requester.data.friends ? requester.data.friends : [], {id: user.id, name: user.name, email: user.email}],
+          friends: [
+            ...(requester.data.friends ? requester.data.friends : []),
+            { id: user.id, name: user.name, email: user.email },
+          ],
         },
       },
     ]);
+    // Cập nhật danh sách friendRequests
+    const updatedUser = {
+      ...user,
+      friends: [
+        ...user.friends,
+        {
+          id: requester.data.id,
+          name: requester.data.name,
+          email: requester.data.email,
+        },
+      ],
+      friend_requests: listRequest,
+    };
+    setUser(updatedUser);
+    setFriendRequests(updatedFriendRequests);
   };
 
   const handleDecline = async (requester) => {
     // Handle decline of the friend request
     console.log(`Declined friend request from ${requester.name}`);
+    const listRequest = user.friend_requests.filter(
+      (request) =>
+        !(
+          request.data.id === requester.data.id &&
+          request.data.recipient === requester.data.recipient
+        )
+    );
+    console.log(listRequest);
     const friendlist = user.friends ? user.friends : [];
     const update = await chatClient.partialUpdateUser({
       id: user.id,
-      unset: [friend_requests.requester],
+      set: {
+        friend_requests: listRequest,
+      },
     });
+    const updatedUser = { ...user, friend_requests: listRequest };
+    setUser(updatedUser);
+    setFriendRequests(listRequest);
   };
 
   return (

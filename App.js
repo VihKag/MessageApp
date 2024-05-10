@@ -23,17 +23,11 @@ const NavigationStack = () => {
   const chatClient = StreamChat.getInstance(chatApiKey);
   if (!clientIsReady) {
     return (
-      <View style={{ flex: 1 , alignContent:"center", alignItems:"center", alignContent:"center"}}>
-        <View>
-          <Text>hellolllllllll</Text>
-        </View>
         <ActivityIndicator
-        style={{alignSelf: 'auto'}}
+          style={{ alignSelf: "auto" }}
           size="large"
           color="#0000ff"
-          
         />
-      </View>
     );
   }
   return (

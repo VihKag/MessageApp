@@ -35,51 +35,17 @@ const ChannelListScreen = (props) => {
       setSearchResults([]);
     }
   };
-  // const handleAddFriend = async (user) => {
-  //   console.log("channellistscreen Gửi yêu cầu kết bạn tới", user.name);
-  //   const channel = chatClient.channel("messaging", {
-  //     members: [currentUser.id, user.id],
-  //   });
-  //   const state = await channel.watch();
-  //   const friendRequest = {
-  //     data: {
-  //       id: currentUser.id,
-  //       name: currentUser.name,
-  //       email: currentUser.email,
-  //       friends: currentUser.friends ? currentUser.friends : [],
-  //       recipient: user.id,
-  //       createdAt: new Date(),
-  //     },
-  //   };
-
-  //   const requests = user.friend_requests ? user.friend_requests : [];
-
-  //   //Không cho tạo request kết bạn nếu tồn tại
-  //   const existingRequest = requests.some(
-  //     (request) =>
-  //       request.data.id === friendRequest.data.id &&
-  //       request.data.recipient === friendRequest.data.recipient
-  //   );
-
-  //   if (!existingRequest) {
-  //     const update = await chatClient.partialUpdateUser({
-  //       id: user.id,
-  //       set: {
-  //         friend_requests: [...requests, friendRequest],
-  //       },
-  //     });
-  //     console.log("channnellistscreen" + update);
-  //   } else {
-  //     console.log("Yêu cầu kết bạn đã tồn tại");
-  //   }
-  // };
   const handleAddFriendWrapper = (user) => {
-    handleAddFriend(currentUser, user);
+    handleAddFriend(currentUser, user, chatClient);
   };
   const isFriend = (user) => {
-    const friendIds = currentUser.friends.map((friend) => friend.id);
+    if(currentUser.friends){
+      const friendIds = currentUser.friends.map((friend) => friend.id);
     console.log("friends : "+friendIds);
     return friendIds.includes(user.id);
+    }else{
+      return false;
+    }
   };
 
   const isCurrentUser = (user) => {

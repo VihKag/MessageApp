@@ -18,24 +18,40 @@ const chatClient = StreamChat.getInstance(chatApiKey, {
   timeout: 6 * 1000,
 });
 
-const partialUpdateUserNvKhang = async()=>{
-  try{
-    const updatedUser = await chatClient.partialUpdateUser({
-      ...user,
-      token: chatUserToken,
-      set: {
-        friends: [
-          {id: "2b866cd5-7b7f-414e-8917-1832179a1a5d", name: "Khôi", email:"khoi123@gmail.com"},
-          {id: "75d6a6a1-2c0c-45f6-8538-c5cbd7d601c7", name: "Hamer", email:"hammer1613@gmail.com"},
-        ], // Mảng chứa các ID của bạn bè
-      },
-    });
-  }catch(error){
-    console.error(
-      `An error occurred while update user'prop: ${error.message}`
-    );
-  }
-}
+// const partialUpdateUserNvKhang = async()=>{
+//   try{
+//     const updatedUser = await chatClient.partialUpdateUser({
+//       ...user,
+//       token: chatUserToken,
+//       set: {
+//         friends: [
+//           {id: "2b866cd5-7b7f-414e-8917-1832179a1a5d", name: "Khôi", email:"khoi123@gmail.com"},
+//           {id: "75d6a6a1-2c0c-45f6-8538-c5cbd7d601c7", name: "Hamer", email:"hammer1613@gmail.com"},
+//         ], // Mảng chứa các ID của bạn bè
+//       },
+//     });
+//   }catch(error){
+//     console.error(
+//       `An error occurred while update user'prop: ${error.message}`
+//     );
+//   }
+// }
+// const partialUpdateUserQT = async()=>{
+//   try{
+//     const updatedUser = await chatClient.partialUpdateUser({
+//       ...user,
+//       token: chatUserToken,
+//       set: {
+//         friends: [
+//         ], // Mảng chứa các ID của bạn bè
+//       },
+//     });
+//   }catch(error){
+//     console.error(
+//       `An error occurred while update user'prop: ${error.message}`
+//     );
+//   }
+// }
 
 // const deleteUser = async()=>{
 //   try{
@@ -90,7 +106,6 @@ export const useChatClient = () => {
         // if (!response.users[0].friends) {
         //   partialUpdateUser();
         // }
-        partialUpdateUserNvKhang();
         setUser(response.users[0]);
       } catch (error) {
         console.error(`An error occurred while getting user: ${error.message}`);

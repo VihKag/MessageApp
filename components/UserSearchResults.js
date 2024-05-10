@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { OnlineIndicator } from "./OnlineIndicator";
-
+import { Icon } from "react-native-elements";
 const UserSearchResult = ({
   user,
   isFriend,
@@ -32,9 +32,14 @@ const UserSearchResult = ({
       </View>
 
       {isFriend ? (
-        <TouchableOpacity style={styles.actionButton} onPress={onCall}>
-          <Text style={styles.actionButtonText}>Gọi</Text>
+        <View style={styles.rightContainer}>
+        <TouchableOpacity style={styles.rightItem} >
+          <Icon name="call-outline" type="ionicon" size={24} />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.rightItem} >
+          <Icon name="videocam-outline" type="ionicon" size={24} />
+        </TouchableOpacity>
+      </View>
       ) : (
         <TouchableOpacity style={styles.actionButton} onPress={onAddFriend}>
           <Text style={styles.actionButtonText}>Kết bạn</Text>
@@ -79,19 +84,30 @@ const styles = StyleSheet.create({
   actionButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: "#007AFF",
     borderRadius: 5,
     marginLeft: 10,
+    borderRadius:25,
+    backgroundColor:"#c1dcff"
   },
   actionButtonText: {
-    color: "#fff",
+    color: "#0784DF",
     fontSize: 14,
+    fontWeight:"700",
   },
   onlineIndicator: {
     position: "absolute",
     right: 12,
     bottom: 0,
   },
+  rightContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginRight:14,
+  },
+  rightItem:{
+    marginHorizontal:10,
+  }
 });
 
 export default UserSearchResult;

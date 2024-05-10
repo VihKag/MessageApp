@@ -1,7 +1,6 @@
 import { useAppContext } from "../AppContext";
 
-export const handleAddFriend = async (currentUser, user) => {
-    const {chatClient} = useAppContext();
+export const handleAddFriend = async (currentUser, user, chatClient) => {
   console.log("Gửi yêu cầu kết bạn tới", user.name);
   const channel = chatClient.channel("messaging", {
     members: [currentUser.id, user.id],

@@ -3,9 +3,8 @@ import { View, StyleSheet,Text} from 'react-native';
 
 export const OnlineIndicator = ({ online }) => {
   return (
-    <View style={[styles.indicator, online ? styles.online : styles.offline]}>
-      <View style={[styles.dot, online ? styles.onlineDot : null]} />
-      <Text>{online ? "online" : "offline"}</Text>
+    <View style={[styles.indicator, styles.online]}>
+      <View style={ online ? styles.onlineDot : styles.offlineDot} />
     </View>
   );
 };
@@ -17,20 +16,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  online: {
     backgroundColor: 'transparent',
   },
-  offline: {
-    display:"none",
-  },
-  dot: {
+  onlineDot: {
     width: 10,
     height: 10,
     borderRadius: 6,
+    backgroundColor: 'green',
   },
-  onlineDot: {
-    backgroundColor: '#4CD964',
+  offlineDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 6,
+    backgroundColor: 'gray',
   },
 });
 

@@ -123,37 +123,62 @@ const ChannelScreen = (props) => {
           <View style={{ display: flagSearch ? "none" : "block" }}>
             <View style={styles.headerContainer}>
               <View style={styles.leftHeaderContainer}>
-                <TouchableOpacity onPress={handleBack}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={require("../../assets/back.png")}
+                <TouchableOpacity
+                  style={{ marginHorizontal: 8 }}
+                  onPress={handleBack}
+                >
+                  <Icon
+                    name="arrow-back-outline"
+                    type="ionicon"
+                    size={24}
+                    color="#fff"
                   />
                 </TouchableOpacity>
+                <View style={styles.avatarContainer}>
                 <ChannelAvatar channel={channel} />
+                <View style={styles.onlineIndicator}>
+                  <OnlineIndicator online={otherUserState} />
+                </View>
+                </View>
+                
                 <View style={styles.groupHeader}>
                   <Text style={styles.channelName}>
                     {getPreviewName(channel)}
                   </Text>
-                  <OnlineIndicator online={otherUserState} />
                 </View>
               </View>
               <View style={styles.rightHeadrContainer}>
-                <TouchableOpacity onPress={openSearchBar}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={require("../../assets/search.png")}
+                <TouchableOpacity
+                  style={{ marginHorizontal: 8 }}
+                  onPress={openSearchBar}
+                >
+                  <Icon
+                    name="search-outline"
+                    type="ionicon"
+                    size={24}
+                    color="#fff"
                   />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={openCall}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={require("../../assets/telephone.png")}
+                <TouchableOpacity
+                  style={{ marginHorizontal: 8 }}
+                  onPress={openCall}
+                >
+                  <Icon
+                    name="call-outline"
+                    type="ionicon"
+                    size={24}
+                    color="#fff"
                   />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={openVideo}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={require("../../assets/video.png")}
+                <TouchableOpacity
+                  style={{ marginHorizontal: 8 }}
+                  onPress={openVideo}
+                >
+                  <Icon
+                    name="videocam-outline"
+                    type="ionicon"
+                    size={24}
+                    color="#fff"
                   />
                 </TouchableOpacity>
               </View>
@@ -163,7 +188,7 @@ const ChannelScreen = (props) => {
             <TouchableOpacity>
               <View style={styles.btnAddFriend}>
                 <Icon name="person-add-outline" type="ionicon" size={24} />
-                <Text style={{fontWeight:"bold", margin: 4,}}>Kết bạn</Text>
+                <Text style={{ fontWeight: "bold", margin: 4 }}>Kết bạn</Text>
               </View>
             </TouchableOpacity>
           )}
@@ -237,11 +262,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16,
     color: "#fff",
-  },
-  tinyLogo: {
-    width: 24,
-    height: 24,
-    marginStart: 24,
+    fontWeight: "700",
   },
   channelConnectivity: {
     marginTop: 4,
@@ -250,7 +271,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   groupHeader: {
-    marginStart: 16,
+    marginStart: 12,
   },
   container: {
     flex: 1,
@@ -311,11 +332,20 @@ const styles = StyleSheet.create({
     color: "#777",
   },
   btnAddFriend: {
-    height: 50,
+    height: 46,
     backgroundColor: "#bbbbbb",
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
+  },
+  onlineIndicator: {
+    position: "absolute",
+    right:4,
+    bottom: 0,
+  },
+  avatarContainer: {
+    position: "relative",
+    flexDirection: "row",
   },
 });
 export default ChannelScreen;

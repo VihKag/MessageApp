@@ -16,6 +16,7 @@ const FriendListScreen = (props) => {
   const navigation = useNavigation();
   const { user, chatClient } = useAppContext();
   const [isSearching, setIsSearching] = useState(false);
+  const [friendRequestCount, setFriendRequestCount] = useState(0);
   const handleViewFriendRequests = () => {
     props.navigation.navigate("FriendRequestListScreen"); // Tên của màn hình danh sách lời mời kết bạn trong Navigator của bạn
   };
@@ -32,6 +33,13 @@ const FriendListScreen = (props) => {
       setSearchResults([]);
     }
   };
+  useEffect(() => {
+    if (user.friend_requests) {
+      setFriendRequestCount(user.friend_requests.length);
+    } else {
+      setFriendRequestCount(0);
+    }
+  }, [user.friend_requests]);
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <SearchComponent
@@ -57,10 +65,11 @@ const FriendListScreen = (props) => {
             </View>
             <Text style={styles.textRequest}>Lời mời kết bạn</Text>
           </View>
-          <Text style={[styles.text_primary, styles.requestCount]}>{0}</Text>
+          {friendRequestCount>0 && (
+            <Text style={ styles.requestCount}>{friendRequestCount}</Text>
+          )}
         </TouchableOpacity>
       </View>
-      {/* <Button title="Lời mời kết bạn" onPress={handleViewFriendRequests} /> */}
       <FlatList
         data={user.friends}
         renderItem={({ item }) => <FriendListItem user={item} />}
@@ -100,5 +109,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333333",
   },
+  requestCount:{
+    height:20,
+    width:20,
+    borderRadius: 50,
+    backgroundColor:"red",
+    color:"white",
+    textAlign:"center",
+    fontWeight:"700",
+  }
 });
 export default FriendListScreen;
