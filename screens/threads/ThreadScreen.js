@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { useAppContext } from "../../AppContext";
-import { Channel, Thread } from "stream-chat-expo";
+import { Channel, Thread} from "stream-chat-expo";
 
 const ThreadScreen = () => {
   const { channel, thread } = useAppContext();
